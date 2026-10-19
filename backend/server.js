@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path'); 
 require('dotenv').config();
 const pool = require('./db');
 
@@ -8,6 +9,9 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
+
+// Serve your sibling frontend folder so index.html loads at the root URL
+app.use(express.static(path.join(__dirname, '../frontend')));
 
 // Auto-initialize table and sample records on startup
 async function initDB() {
