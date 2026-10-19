@@ -2,13 +2,11 @@ const { Pool } = require('pg');
 require('dotenv').config();
 
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false }
-});
-
-pool.connect((err) => {
-    if (err) console.error('Supabase connection error:', err.stack);
-    else console.log('Connected to Supabase PostgreSQL database!');
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  },
+  family: 4 // This forces IPv4 and stops the ENETUNREACH crash
 });
 
 module.exports = pool;
