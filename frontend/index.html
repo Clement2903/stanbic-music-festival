@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stanbic Music Festival Lineup</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 0; 
+            padding: 30px; 
+            background: linear-gradient(135deg, #0b192c, #1e3e62); 
+            color: #ffffff; 
+            min-height: 100vh;
+        }
+
+        .main-container {
+            display: flex;
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            align-items: flex-start;
+        }
+
+        /* Left Column: Form */
+        .form-section {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .form-section h2 {
+            margin-top: 0;
+            color: #ffffff;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        form { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px; 
+        }
+
+        input { 
+            padding: 12px 15px; 
+            font-size: 0.95rem; 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
+            border-radius: 6px; 
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        input:focus {
+            border-color: #00b4d8;
+            box-shadow: 0 0 10px rgba(0, 180, 216, 0.4);
+        }
+
+        form button { 
+            background: #00b4d8; 
+            color: #0b192c; 
+            border: none; 
+            cursor: pointer; 
+            font-weight: bold; 
+            font-size: 1.05rem;
+            padding: 14px;
+            border-radius: 6px;
+            transition: background 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 180, 216, 0.4);
+            margin-top: 10px;
+        }
+
+        form button:hover { 
+            background: #90e0ef; 
+        }
+
+        /* Right Column: Table */
+        .table-section {
+            flex: 2;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow-x: auto;
+        }
+
+        table { 
+            width: 100%; 
+            border-collapse: collapse; 
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        th, td { 
+            padding: 12px 10px; 
+            text-align: left; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08); 
+        }
+
+        th { 
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        tr:hover { 
+            background-color: rgba(255, 255, 255, 0.03); 
+        }
+
+        /* Action Buttons */
+        .btn-edit {
+            background: #90e0ef;
+            color: #0b192c;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-right: 4px;
+        }
+
+        .btn-edit:hover {
+            background: #00b4d8;
+            color: white;
+        }
+
+        .btn-delete {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .btn-delete:hover {
+            background: #fa5252;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <!-- Left: Form Panel -->
+        <div class="form-section">
+            <h2>Stanbic Festival Lineup</h2>
+            <form id="lineup-form">
+                <input type="hidden" id="record-id">
+                <input type="text" id="festival_name" placeholder="Festival Name" value="Stanbic Music Festival" required>
+                <input type="text" id="artist_name" placeholder="Artist Name" required>
+                <input type="text" id="genre" placeholder="Genre" required>
+                <input type="text" id="stage" placeholder="Stage" required>
+                <input type="text" id="performance_time" placeholder="Performance Time (e.g., 12:30 - 1:00 PM)" required>
+                <input type="number" step="0.01" id="ticket_price" placeholder="Ticket Price" value="500.00" required>
+                <button type="submit" id="submit-btn">Add Artist</button>
+            </form>
+        </div>
+
+        <!-- Right: Table Panel -->
+        <div class="table-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Festival</th>
+                        <th>Artist</th>
+                        <th>Genre</th>
+                        <th>Stage</th>
+                        <th>Time</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="lineup-table-body">
+                    <!-- Data will load here dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
