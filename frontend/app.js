@@ -31,8 +31,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 <td>${record.performance_time}</td>
                 <td>$${record.ticket_price}</td>
                 <td>
-                    <button class="edit-btn" onclick="editRecord(${record.id}, '${escapeHtml(record.festival_name)}', '${escapeHtml(record.artist_name)}', '${escapeHtml(record.genre)}', '${escapeHtml(record.stage)}', '${escapeHtml(record.performance_time)}', ${record.ticket_price})">Edit</button>
-                    <button class="delete-btn" onclick="deleteRecord(${record.id})">Delete</button>
+                    <button onclick="editRecord(${record.id}, '${escapeHtml(record.festival_name)}', '${escapeHtml(record.artist_name)}', '${escapeHtml(record.genre)}', '${escapeHtml(record.stage)}', '${escapeHtml(record.performance_time)}', ${record.ticket_price})" 
+                        style="background-color: #2563eb; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; margin-right: 5px; font-weight: 500;">
+                        Edit
+                    </button>
+                    <button onclick="deleteRecord(${record.id})" 
+                        style="background-color: #dc2626; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-weight: 500;">
+                        Delete
+                    </button>
                 </td>
             `;
             tableBody.appendChild(tr);
@@ -97,6 +103,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const submitBtn = form.querySelector('button[type="submit"]') || form.querySelector('button');
         if (submitBtn) submitBtn.textContent = 'Update Artist';
+        
+        // Scroll smoothly back to the form so the user sees it populated
+        form.scrollIntoView({ behavior: 'smooth' });
     };
 
     // Handle Delete operation
