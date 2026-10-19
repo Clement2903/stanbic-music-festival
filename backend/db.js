@@ -6,7 +6,7 @@ const pool = new Pool({
   ssl: {
     rejectUnauthorized: false
   },
-  family: 4 // This forces IPv4 and stops the ENETUNREACH crash
+  family: 4
 });
 
 module.exports = pool;
