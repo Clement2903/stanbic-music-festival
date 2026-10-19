@@ -12,6 +12,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('/api/lineup');
             const data = await response.json();
             renderTable(data);
+            
+            // Check if URL has an ID parameter or hash (e.g. ?id=2 or #2) to highlight
+            setTimeout(checkAndHighlightRow, 100);
         } catch (err) {
             console.error('Failed to load lineup:', err);
         }
@@ -22,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tableBody.innerHTML = '';
         records.forEach(record => {
             const tr = document.createElement('tr');
+            tr.id = `artist-row-${record.id}`; // Unique ID for direct referencing
             tr.innerHTML = `
                 <td>${record.id}</td>
                 <td>${record.festival_name}</td>
@@ -43,6 +47,30 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             tableBody.appendChild(tr);
         });
+    }
+
+    function checkAndHighlightRow() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const targetId = urlParams.get('id') || window.location.hash.replace('#', '');
+        
+        if (!targetId) return;
+
+        const row = document.getElementById(`artist-row-${targetId}`);
+        if (row) {
+            row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            
+            // Apply blinking / highlighting effect matching your page theme
+            row.style.transition = 'background-color 0.3s ease';
+            let flashes = 0;
+            const flashInterval = setInterval(() => {
+                row.style.backgroundColor = flashes % 2 === 0 ? '#3b82f6' : ''; // Blue flash
+                flashes++;
+                if (flashes > 5) {
+                    clearInterval(flashInterval);
+                    row.style.backgroundColor = '#1e3a8a'; // Final subtle highlight
+                }
+            }, 3000 / 6);
+        }
     }
 
     // Handle Form Submit for Create (POST) or Update (PUT)
@@ -90,7 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Populate form for editing
     window.editRecord = function(id, festival, artist, genre, stage, time, price) {
         editingId = id;
         const inputs = form.querySelectorAll('input');
@@ -103,12 +130,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const submitBtn = form.querySelector('button[type="submit"]') || form.querySelector('button');
         if (submitBtn) submitBtn.textContent = 'Update Artist';
-        
-        // Scroll smoothly back to the form so the user sees it populated
         form.scrollIntoView({ behavior: 'smooth' });
     };
 
-    // Handle Delete operation
     window.deleteRecord = async function(id) {
         if (!confirm('Are you sure you want to delete this record?')) return;
         try {
